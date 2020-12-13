@@ -1,0 +1,12 @@
+echo "command : ls"
+ls
+echo "command : ls -> cat -> wc"
+ls | cat | wc
+echo "command : cd .."
+cd ..
+echo "command : ls -lah --color"
+ls -lah --color
+echo "command : cd"
+cd
+echo "command : ls -lah --color -> grep -E 'zsh'"
+ls -lah --color | grep -E "zsh"
