@@ -15,3 +15,6 @@ typedef struct Parsed{
 bool parse_flags(char* token, Parsed* parsed_command, int start);
 bool make_pipe_commands(char* token, Parsed* parsed_command);
 bool parse(char* command, Parsed* parsed_command, char* err);
+bool is_piped(char* command);
+void delete_parsed_command(Parsed* parsed_command);
+bool is_built_in(char* command);
