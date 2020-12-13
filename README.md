@@ -27,10 +27,12 @@ BUILT IN COMMANDS:
 		IT WILL TERMINATE THE CURRENT SHELL
 	pandash_talk [YOUR_ID] [THE_OTHER_SHELL_ID]: (ID can be anything)
 		GOES TO CHAT MODE AND YOU CAN CHAT WITH ONE OTHER PANDASH SHELL
+	pandash_send [THE_OTHER_SHELL_ID] [YOUR QOUTED MSG]: (ID can be anything)
+		TRYS TO DELIEVER YOUR MSG, YOUR ID IS PRINTED AS SOON AS YOU EXECUTE THIS PROGRAM
 ```
 
 ## About
-If you are willing to run a script - like the example i have provided - you can run "pandash scriptName" and for interactive mode just run "pandash".
+If you are willing to run a script - like the example i have provided - you can run "pandash scriptName" and for interactive mode just run "pandash". It is always listening for other pandas messages.
 
 You can also communicate with other pandash shells using "pandash_talk" built-in command, it will take you to chat mode and you can start sending messages, just make sure your provided IDs are not identical. For example if your id is COOL and the other shell's ID is COOLER your should run "pandash_talk COOL COOLER" and the other shell must run "pandash_talk COOLER COOL" (you choose your ID by typing this command)!
 

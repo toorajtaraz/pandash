@@ -11,7 +11,7 @@
 #include "../headers/parser.h"
 #include "../headers/commands.h"
 
-const char* built_in[] = {"cd", "exit", "pandash_talk", "help"};
+const char* built_in[] = {"cd", "exit", "pandash_talk", "help", "pandash_send"};
 
 bool is_piped(char* command) {
     if (strstr(command, "|")) {

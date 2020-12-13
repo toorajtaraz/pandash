@@ -10,6 +10,7 @@
 #include <pthread.h>
 #include "../headers/ansi.h"
 #define PATH_FIFO "/tmp/pandashbox_"
+#define PERMANENT_FIFO_PATH "/tmp/pandashbox_permanent_\0"
 
 int fd;
 
@@ -75,6 +76,12 @@ void help() {
     printf(reset);
     printf(BRED);
     puts("\t\tGOES TO CHAT MODE AND YOU CAN CHAT WITH ONE OTHER PANDASH SHELL");
+    printf(reset);
+    printf(CYN);
+    puts("\tpandash_send [THE_OTHER_SHELL_ID] [YOUR QOUTED MSG]: (ID can be anything)");
+    printf(reset);
+    printf(BRED);
+    puts("\t\tTRYS TO DELIEVER YOUR MSG, YOUR ID IS PRINTED AS SOON AS YOU EXECUTE THIS PROGRAM");
     printf(reset);
 }
 
@@ -147,3 +154,19 @@ void pandash_talk(char* id1, char*id2) {
         write(wfd, buf, strlen(buf)+1);
     } 
 }
+void pandash_send(char*id, char* msg) {
+    char* fifo_path = malloc(sizeof(char)*124);
+    strcpy(fifo_path, PERMANENT_FIFO_PATH);
+    strcat(fifo_path, id);
+    puts(fifo_path);
+    int wfd = open(fifo_path, O_WRONLY);
+    if (fd == -1) {
+        perror("NO PANDA WITH THAT ID");
+        abort();
+    }
+    if (write(wfd, msg, strlen(msg)+1) == -1) {
+        perror("COULD NOT DELIEVER");
+        abort();
+    }
+}
+

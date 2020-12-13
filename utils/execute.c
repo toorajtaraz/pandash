@@ -37,6 +37,22 @@ void handle_built_in(Parsed* parsed_command) {
         }
        return;
    }  
+   if (strstr(parsed_command->command, "pandash_send")) {
+        if (parsed_command->flag_count <= 2) {
+            fprintf(stderr, "YOU NEED TO PROVIDE 2 VALUES, THE OTHER SHELL'S ID AND YOUR QOUTED MESSAGE\n");
+            return;
+        }
+        pid_t pid = fork();
+        if (pid == -1) {
+            return;
+        } else if (pid == 0) {
+            pandash_send(parsed_command->flags[1], parsed_command->flags[2]);
+            abort();
+        } else {
+            wait(NULL);
+        }
+       return;
+   }
 }
 
 int spawn_proc(Parsed *parsed_command) {

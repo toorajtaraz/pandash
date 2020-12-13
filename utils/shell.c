@@ -7,13 +7,48 @@
 #include "../headers/execute.h"
 #include <signal.h>
 #include <unistd.h>
-#include <sys/fcntl.h>
 #include "../headers/commands.h"
 #include "../headers/ansi.h"
+#include <fcntl.h>
+#include <sys/stat.h> 
+#include <sys/types.h> 
+#include <pthread.h>
+
+#define PERMANENT_FIFO_PATH "/tmp/pandashbox_permanent_\0"
 
 pid_t main_proc;
 bool run = true;
 bool new_line = true;
+char* fifo_path;
+void print_prompt();
+
+void create_permanent_fifo() {
+    fifo_path = malloc(sizeof(char)*150);
+    char* path = malloc(sizeof(char)*150);
+    int pid = getpid();
+    sprintf(path, "%s%d", PERMANENT_FIFO_PATH, pid);
+    mkfifo(path, 0666);
+    strcpy(fifo_path, path);
+    free(path);
+}
+
+void* listen() {
+    int fd = open(fifo_path, O_RDONLY|O_NONBLOCK);
+    if (fd == -1) {
+        perror("COMMUNICATION FAILED");
+        abort();
+    }
+    while (true) {
+        char buf[125] = {'\0'};
+        read(fd, buf, sizeof(char)*124);
+        if (buf[0] != '\0') {
+            printf("\nSOME OTHER PANDA : %s\n", buf);
+            print_prompt();
+        }
+        fflush(stdout);
+        sleep(2);
+    }
+}
 
 void print_prompt() {
     if (new_line) puts("");
@@ -117,7 +152,13 @@ void prompt_loop() {
 }
 
 void pandash() {
+    create_permanent_fifo();
+    pthread_t  tid;
+    pthread_create(&tid, NULL, listen, (void *)NULL);
     main_proc = getpid();
+    printf(BWHT);
+    printf("\n**ID : %d**\n", main_proc);
+    printf(reset);
     signal(SIGINT, handle_intrupt); 
     LOOP:
         prompt_loop();
