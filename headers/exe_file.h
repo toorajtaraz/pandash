@@ -1,2 +1,2 @@
 #define HEADER_FILE
-void process_file(char* file);
+void process_file(char *file);
