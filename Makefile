@@ -1,19 +1,30 @@
-PROGRAM = pandash
-CC = gcc
-BUILD = build
-FILES = main.c utils/* 
-CFLAGS = -lreadline -lpthread -o $(BUILD)/$(PROGRAM)
+CC=clang
+CFLAGS=-Wall -lreadline -lpthread
+VPATH=utils
+BUILDDIR=build
+SRC=$(wildcard $(VPATH)/*.c)
+MAIN=$(wildcard ./*.c)
+OBJ=$(subst utils/,$(BUILDDIR)/, $(subst .c,.o, $(SRC))) $(subst ./,$(BUILDDIR)/, $(subst .c,.o, $(MAIN)))
+BIN=bin
+PROGRAM=pandash
+TARGET=$(BIN)/$(PROGRAM)
 
-all: pandash
+all: lsdint
 
-pandash:
-	mkdir -p $(BUILD);
-	$(CC) $(FILES) $(CFLAGS);
+$(BUILDDIR)/%.o: $(VPATH)/%.c
+	mkdir -p $(BUILDDIR)
+	$(CC) -c $< -o $@
+
+$(BUILDDIR)/%.o: %.c
+	mkdir -p $(BUILDDIR)
+	$(CC) -c $< -o $@
+
+lsdint: $(OBJ)
+	mkdir -p $(BIN)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
+
+run:
+	./$(TARGET)
 
 clean:
-	rm -fr $(BUILD)
-
-install:
-	cp $(BUILD)/$(PROGRAM) /bin/$(PROGRAM);
-	chmod 777 /bin/$(PROGRAM);
-
+	rm -fr $(BUILDDIR) $(BIN)
