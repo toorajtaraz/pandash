@@ -9,11 +9,6 @@ Just make sure you have gcc and make installed, then simply run:
 ```bash
 make all
 ```
-For installation:
-```bash
-sudo make install
-```
-
 ## Usage
 After runing just type "help".
 ```bash
