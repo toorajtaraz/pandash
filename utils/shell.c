@@ -14,7 +14,7 @@
 #include <sys/types.h> 
 #include <pthread.h>
 
-#define PERMANENT_FIFO_PATH "/tmp/pandashbox_permanent_\0"
+#define PERMANENT_FIFO_PATH "/tmp/pandashbox_permanent_"
 
 pid_t main_proc;
 bool run = true;
