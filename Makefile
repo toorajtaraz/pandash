@@ -9,7 +9,7 @@ BIN=bin
 PROGRAM=pandash
 TARGET=$(BIN)/$(PROGRAM)
 
-all: lsdint
+all: pandash
 
 $(BUILDDIR)/%.o: $(VPATH)/%.c
 	mkdir -p $(BUILDDIR)
@@ -19,7 +19,7 @@ $(BUILDDIR)/%.o: %.c
 	mkdir -p $(BUILDDIR)
 	$(CC) -c $< -o $@
 
-lsdint: $(OBJ)
+pandash: $(OBJ)
 	mkdir -p $(BIN)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
 
