@@ -3,7 +3,6 @@
  *
  */
 
-#define PROMPT "PANDASH"
 #define SIGN "$"
 #define PROMPT_COLOR BGRN
 #define BRACKET_COLOR BBLU

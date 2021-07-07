@@ -20,6 +20,7 @@ pid_t main_proc;
 bool run = true;
 bool new_line = true;
 char* fifo_path;
+char* prompt;
 void print_prompt();
 
 void create_permanent_fifo() {
@@ -53,7 +54,7 @@ void* listen() {
 void print_prompt() {
     if (new_line) puts("");
     printf(PROMPT_COLOR);
-    printf(PROMPT);
+    printf("%s", prompt);
     printf(SIGN);
     printf(reset);
     printf(BRACKET_COLOR);
@@ -152,6 +153,15 @@ void prompt_loop() {
 }
 
 void pandash() {
+    prompt = (char *) malloc(sizeof(char)*250);
+    if (prompt == NULL) {
+        fprintf(stderr, "memory allocation failed");
+        return;
+    }
+    if (getlogin_r(prompt, 250) < 0) {
+        fprintf(stderr, "getting logined user failed");
+        return;
+    }
     create_permanent_fifo();
     pthread_t  tid;
     pthread_create(&tid, NULL, listen, (void *)NULL);
