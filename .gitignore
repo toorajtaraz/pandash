@@ -1,3 +1,4 @@
 build
 *.out
 bin
+compile_commands.json
